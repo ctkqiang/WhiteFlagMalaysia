@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">White Flag</string>
+    <string name="give">I Am Here To Help</string>
+    <string name="get">I Am Here To Seek Help</string>
+    <string name="footnote">\"For The Citizens By The Citizens\"</string>
+    <string name="name">Name</string>
+    <string name="hp">Phone Number</string>
+    <string name="home">Address</string>
+    <string name="desp">What Help Do You Need?</string>
+    <string name="post">Post</string>
+
+</resources>
