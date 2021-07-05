@@ -1,22 +1,66 @@
 package com.johnmelodyme.whiteflag.activities;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-
 import com.johnmelodyme.whiteflag.R;
+import com.johnmelodyme.whiteflag.components.FlagsAdapter;
+import com.johnmelodyme.whiteflag.constants.Constants;
 import com.johnmelodyme.whiteflag.constants.LogLevel;
 import com.johnmelodyme.whiteflag.functions.FlagFunctions;
+import com.johnmelodyme.whiteflag.model.WhiteFlags;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 
 public class HelperActivity extends AppCompatActivity
 {
     public static LogLevel LEVEL = LogLevel.DEBUG;
+    public static String base_url = Constants.get_data;
+    ArrayList<WhiteFlags> whiteFlagList;
+    public ProgressDialog dialog;
+
+    public ListView listView;
+
 
     /* Render User Interface */
     public void render_user_interface(Bundle bundle)
     {
         FlagFunctions.log_output("render_user_interface/1", 0, LEVEL);
+
+        whiteFlagList = new ArrayList<>();
+
+        listView = (ListView) findViewById(R.id.recycler_view);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                WhiteFlags whiteFlags = (WhiteFlags) whiteFlagList.get(position);
+
+                FlagFunctions.log_output(
+                        whiteFlags.getUserName() + " " + whiteFlags.getPhoneNumber(),
+                        0, LEVEL
+                );
+            }
+        });
     }
+
 
     @Override
     protected void onStart()
@@ -44,6 +88,143 @@ public class HelperActivity extends AppCompatActivity
 
         /* Render User Interface */
         render_user_interface(savedInstanceState);
+
+        /* Get Data*/
+        new GetData().execute();
     }
 
+    /* Async task class to get JSON by making HTTP call */
+    @SuppressLint("StaticFieldLeak")
+    public class GetData extends AsyncTask<String, String, String>
+    {
+        /**
+         * Runs on the UI thread before {@link #doInBackground}.
+         * Invoked directly by {@link #execute} or {@link #executeOnExecutor}.
+         * The default version does nothing.
+         *
+         * @see #onPostExecute
+         * @see #doInBackground
+         */
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+
+            dialog = new ProgressDialog(HelperActivity.this);
+            dialog.setMessage(getResources().getString(R.string.loading));
+            dialog.setCancelable(false);
+            dialog.show();
+        }
+
+        /**
+         * Override this method to perform a computation on a background thread. The
+         * specified parameters are the parameters passed to {@link #execute}
+         * by the caller of this task.
+         * <p>
+         * This will normally run on a background thread. But to better
+         * support testing frameworks, it is recommended that this also tolerates
+         * direct execution on the foreground thread, as part of the {@link #execute} call.
+         * <p>
+         * This method can call {@link #publishProgress} to publish updates
+         * on the UI thread.
+         *
+         * @param params The parameters of the task.
+         * @return A result, defined by the subclass of this task.
+         * @see #onPreExecute()
+         * @see #onPostExecute
+         * @see #publishProgress
+         */
+        @Override
+        protected String doInBackground(String... params)
+        {
+            String result = null;
+
+            whiteFlagList.clear();
+
+            try
+            {
+                URL url = new URL(base_url);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.connect();
+
+                if (conn.getResponseCode() == HttpURLConnection.HTTP_OK)
+                {
+                    InputStreamReader inputStreamReader =
+                            new InputStreamReader(conn.getInputStream());
+                    BufferedReader reader = new BufferedReader(inputStreamReader);
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String temp;
+
+                    while ((temp = reader.readLine()) != null)
+                    {
+                        stringBuilder.append(temp);
+                    }
+
+                    result = stringBuilder.toString();
+                }
+                else
+                {
+                    result = "Error";
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+
+        /**
+         * <p>Runs on the UI thread after {@link #doInBackground}. The
+         * specified result is the value returned by {@link #doInBackground}.
+         * To better support testing frameworks, it is recommended that this be
+         * written to tolerate direct execution as part of the execute() call.
+         * The default version does nothing.</p>
+         *
+         * <p>This method won't be invoked if the task was cancelled.</p>
+         *
+         * @param s The result of the operation computed by {@link #doInBackground}.
+         * @see #onPreExecute
+         * @see #doInBackground
+         */
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+
+
+            try
+            {
+                JSONObject object = new JSONObject(s);
+                JSONArray array = object.getJSONArray("WHITE_FLAG");
+
+                for (int i = 0; i < array.length(); i++)
+                {
+                    JSONObject jsonObject = array.getJSONObject(i);
+
+                    String name = jsonObject.getString("USER_NAME");
+                    String phone = jsonObject.getString("PHONE_NUMBER");
+                    String home = jsonObject.getString("HOME_ADDRESS");
+                    String description = jsonObject.getString("DESCRIPTION");
+
+                    WhiteFlags whiteFlags = new WhiteFlags();
+                    whiteFlags.setUserName(name);
+                    whiteFlags.setPhoneNumber(phone);
+                    whiteFlags.setHomeAddress(home);
+                    whiteFlags.setDescription(description);
+
+                    whiteFlagList.add(whiteFlags);
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+
+            FlagsAdapter adapter = new FlagsAdapter(HelperActivity.this, whiteFlagList);
+            listView.setAdapter(adapter);
+            dialog.dismiss();
+        }
+    }
 }

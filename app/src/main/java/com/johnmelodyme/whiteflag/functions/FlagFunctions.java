@@ -41,11 +41,11 @@ public class FlagFunctions extends Constants
             {
                 if (ok == 0)
                 {
-                    Log.d(TAG, logLevel + " {:ok " + string + "}");
+                    Log.d(TAG, logLevel.toString() + " {:ok " + string + "}");
                 }
                 else
                 {
-                    Log.d(TAG, logLevel + " {:error " + string + "}");
+                    Log.d(TAG, logLevel.toString() + " {:error " + string + "}");
                 }
                 break;
             }

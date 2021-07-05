@@ -8,5 +8,7 @@
     <string name="home">Address</string>
     <string name="desp">What Help Do You Need?</string>
     <string name="post">Post</string>
+    <string name="phone">Phone</string>
+    <string name="loading">Loading Citizens Data</string>
 
 </resources>
