@@ -160,7 +160,6 @@ public class HelpSeekerActivity extends AppCompatActivity
 
                                 FlagFunctions.show_toast(getString(R.string.return400), HelpSeekerActivity.this);
 
-
                             }
                         }
 

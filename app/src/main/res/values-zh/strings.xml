@@ -25,4 +25,6 @@
     <string name="return200">您的请求发布成功 😇</string>
     <string name="return400">您的请求发布不成功 😟</string>
     <string name="success_message">别担心......帮助即将到来  😟</string>
+    <string name="helped">收到的帮助</string>
+    <string name="call_msg">你想给他/她打电话吗？</string>
 </resources>

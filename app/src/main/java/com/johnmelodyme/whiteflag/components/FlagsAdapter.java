@@ -12,14 +12,24 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.johnmelodyme.whiteflag.R;
+import com.johnmelodyme.whiteflag.constants.Constants;
 import com.johnmelodyme.whiteflag.constants.LogLevel;
 import com.johnmelodyme.whiteflag.functions.FlagFunctions;
-import com.johnmelodyme.whiteflag.model.WhiteFlags;
 import com.johnmelodyme.whiteflag.model.WhiteFlagsGet;
+import com.johnmelodyme.whiteflag.services.PostService;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class FlagsAdapter extends BaseAdapter implements Filterable
 {
@@ -98,6 +108,7 @@ public class FlagsAdapter extends BaseAdapter implements Filterable
     {
         WhiteFlagsGet whiteFlags = whiteFlagsList.get(position);
 
+
         if (convertView == null)
         {
             convertView = LayoutInflater.from(context).inflate(R.layout.helper_item, parent, false);
@@ -107,6 +118,7 @@ public class FlagsAdapter extends BaseAdapter implements Filterable
         TextView phone = (TextView) convertView.findViewById(R.id.insert_phone);
         TextView address = (TextView) convertView.findViewById(R.id.insert_address);
         TextView description = (TextView) convertView.findViewById(R.id.insert_description);
+        TextView status = (TextView) convertView.findViewById(R.id.status_user);
         TextView date = (TextView) convertView.findViewById(R.id.insert_date);
         Button send_help = (Button) convertView.findViewById(R.id.help_user);
 
@@ -115,9 +127,103 @@ public class FlagsAdapter extends BaseAdapter implements Filterable
         address.setText(context.getResources().getString(R.string.home) + ":\n" + whiteFlagsList.get(position).getHomeAddress());
         description.setText("\"" + whiteFlagsList.get(position).getDescription() + "\"");
         date.setText(context.getResources().getString(R.string.request_on) + "\t" + whiteFlagsList.get(position).getCreatedAt());
+        status.setText(context.getResources().getString(R.string.helped) + "\t " + whiteFlagsList.get(position).getStatus());
 
         send_help.setOnClickListener(v ->
         {
+            new AlertDialog.Builder(context).setMessage(R.string.call_msg)
+                    .setTitle(R.string.button_title)
+                    .setPositiveButton(
+                            R.string.yes,
+                            (dialog, which) ->
+                            {
+
+                                FlagFunctions.call_user(whiteFlags.getPhoneNumber(), context);
+
+                                RestAdapter restAdapter;
+
+                                restAdapter =
+                                        new RestAdapter.Builder().setEndpoint(Constants.url).build();
+
+                                PostService postService = restAdapter.create(PostService.class);
+
+                                postService.helpStatus(
+                                        whiteFlags.getPhoneNumber(),
+                                        whiteFlags.getUserName(),
+                                        new Callback<Response>()
+                                        {
+                                            /**
+                                             * Successful HTTP response.
+                                             *
+                                             * @param response
+                                             * @param response2
+                                             */
+                                            @Override
+                                            public void success(Response response,
+                                                                Response response2)
+                                            {
+
+                                                //On success we will read the server's output
+                                                // using
+                                                // bufferedreader
+                                                //Creating a bufferedreader object
+                                                BufferedReader reader = null;
+
+                                                //An string to store output from the server
+                                                String output = "";
+
+                                                try
+                                                {
+                                                    //Initializing buffered reader
+                                                    reader =
+                                                            new BufferedReader(new InputStreamReader(response.getBody().in()));
+
+                                                    //Reading the output in the string
+                                                    output = reader.readLine();
+                                                }
+                                                catch (IOException e)
+                                                {
+                                                    e.printStackTrace();
+                                                }
+
+                                                if (response.getStatus() == 200)
+                                                {
+                                                    FlagFunctions.log_output(
+                                                            "point/1 return -> " + String.valueOf(response.getStatus()),
+                                                            0,
+                                                            LogLevel.DEBUG
+                                                    );
+                                                }
+                                                else
+                                                {
+                                                    FlagFunctions.log_output(
+                                                            "point/1 return -> " + String.valueOf(response.getStatus()),
+                                                            1,
+                                                            LogLevel.DEBUG
+                                                    );
+                                                }
+                                            }
+
+                                            /**
+                                             * Unsuccessful HTTP response due to network
+                                             * failure, non-2XX status
+                                             * code, or unexpected
+                                             * exception.
+                                             *
+                                             * @param error
+                                             */
+                                            @Override
+                                            public void failure(RetrofitError error)
+                                            {
+                                                FlagFunctions.log_output(error.toString(), 1,
+                                                        LogLevel.DEBUG
+                                                );
+                                            }
+                                        }
+                                );
+                            }
+                    ).setNegativeButton(R.string.no, (dialog, which) -> dialog.cancel()).show();
+
             FlagFunctions.log_output(
                     "send_help/n, return ~> " + whiteFlags.getUserName() + " | " + whiteFlags.getPhoneNumber(),
                     0,
@@ -129,7 +235,6 @@ public class FlagsAdapter extends BaseAdapter implements Filterable
                     LogLevel.DEBUG
             );
 
-            FlagFunctions.call_user(whiteFlags.getPhoneNumber(), context);
         });
 
         return convertView;

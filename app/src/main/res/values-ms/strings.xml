@@ -25,4 +25,6 @@
     <string name="return200">Anda berjaya menghantar permintaan 😇</string>
     <string name="return400">Permintaan Anda Tidak Berjaya 😟</string>
     <string name="success_message">Jangan risau ... Bantuan Akan Datang  😟</string>
+    <string name="helped">Bantuan Diterima</string>
+    <string name="call_msg">Adakah anda mahu memanggilnya?</string>
 </resources>

@@ -18,4 +18,12 @@ public interface PostService
             @Field("desp") String description,
             Callback<Response> callback
     );
+
+    @FormUrlEncoded
+    @POST("/flag/api/status/")
+    void helpStatus(
+            @Field("phone") String phone,
+            @Field("name") String name,
+            Callback<Response> callback
+    );
 }

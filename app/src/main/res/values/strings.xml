@@ -25,5 +25,7 @@
     <string name="return200">You successfully posted request 😇</string>
     <string name="return400">Your Request Post Not Successful 😟</string>
     <string name="success_message">No Worries… Help is on its way 😇</string>
+    <string name="helped">Help Received</string>
+    <string name="call_msg">Would you like to call him/her?</string>
 
 </resources>

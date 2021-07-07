@@ -5,15 +5,17 @@ import java.time.OffsetDateTime;
 
 public class WhiteFlagsGet
 {
-    private String id;
-    private String userName;
-    private String phoneNumber;
-    private String homeAddress;
-    private String description;
-    private String userIP;
-    private String currentLocation;
-    private String networkCarrier;
-    private String createdAt;
+
+    public String id;
+    public String userName;
+    public String phoneNumber;
+    public String homeAddress;
+    public String description;
+    public int status;
+    public String userIP;
+    public String currentLocation;
+    public String networkCarrier;
+    public String createdAt;
 
     public String getID()
     {
@@ -98,6 +100,16 @@ public class WhiteFlagsGet
     public String getCreatedAt()
     {
         return createdAt;
+    }
+
+    public int getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus(int status)
+    {
+        this.status = status;
     }
 
     public void setCreatedAt(String value)

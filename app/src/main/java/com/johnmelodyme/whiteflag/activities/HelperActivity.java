@@ -226,6 +226,7 @@ public class HelperActivity extends AppCompatActivity
                     String phone = jsonObject.getString("PHONE_NUMBER");
                     String home = jsonObject.getString("HOME_ADDRESS");
                     String description = jsonObject.getString("DESCRIPTION");
+                    int status = jsonObject.getInt("STATUS");
                     String date = jsonObject.getString("CREATED_AT");
 
                     WhiteFlagsGet whiteFlags = new WhiteFlagsGet();
@@ -233,6 +234,7 @@ public class HelperActivity extends AppCompatActivity
                     whiteFlags.setPhoneNumber(phone);
                     whiteFlags.setHomeAddress(home);
                     whiteFlags.setDescription(description);
+                    whiteFlags.setStatus(status);
                     whiteFlags.setCreatedAt(date);
 
                     whiteFlagList.add(whiteFlags);
