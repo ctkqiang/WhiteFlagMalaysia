@@ -2,11 +2,18 @@ package com.johnmelodyme.whiteflag.activities;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +23,7 @@ import com.johnmelodyme.whiteflag.constants.Constants;
 import com.johnmelodyme.whiteflag.constants.LogLevel;
 import com.johnmelodyme.whiteflag.functions.FlagFunctions;
 import com.johnmelodyme.whiteflag.model.WhiteFlags;
+import com.johnmelodyme.whiteflag.model.WhiteFlagsGet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,11 +40,11 @@ public class HelperActivity extends AppCompatActivity
 {
     public static LogLevel LEVEL = LogLevel.DEBUG;
     public static String base_url = Constants.get_data;
-    ArrayList<WhiteFlags> whiteFlagList;
+    public ArrayList<WhiteFlagsGet> whiteFlagList;
+    public FlagsAdapter adapter;
     public ProgressDialog dialog;
-
     public ListView listView;
-
+    public EditText searchText;
 
     /* Render User Interface */
     public void render_user_interface(Bundle bundle)
@@ -46,21 +54,40 @@ public class HelperActivity extends AppCompatActivity
         whiteFlagList = new ArrayList<>();
 
         listView = (ListView) findViewById(R.id.recycler_view);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        listView.setOnItemClickListener((AdapterView.OnItemClickListener) (parent, view, position
+                , id) ->
+        {
+            WhiteFlagsGet whiteFlags = (WhiteFlagsGet) whiteFlagList.get(position);
+
+            FlagFunctions.log_output(
+                    whiteFlags.getUserName() + " " + whiteFlags.getPhoneNumber(),
+                    0, LEVEL
+            );
+        });
+
+        searchText = (EditText) findViewById(R.id.search);
+        searchText.addTextChangedListener(new TextWatcher()
         {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
             {
-                WhiteFlags whiteFlags = (WhiteFlags) whiteFlagList.get(position);
 
-                FlagFunctions.log_output(
-                        whiteFlags.getUserName() + " " + whiteFlags.getPhoneNumber(),
-                        0, LEVEL
-                );
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0)
+            {
+
             }
         });
-    }
 
+    }
 
     @Override
     protected void onStart()
@@ -72,7 +99,6 @@ public class HelperActivity extends AppCompatActivity
         /* Request User Permission */
         FlagFunctions.get_user_permission(this);
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -110,10 +136,10 @@ public class HelperActivity extends AppCompatActivity
         {
             super.onPreExecute();
 
-            dialog = new ProgressDialog(HelperActivity.this);
+            dialog = new ProgressDialog(HelperActivity.this, R.style.AppCompatAlertDialogStyle);
             dialog.setMessage(getResources().getString(R.string.loading));
-            dialog.setCancelable(false);
             dialog.show();
+
         }
 
         /**
@@ -193,7 +219,6 @@ public class HelperActivity extends AppCompatActivity
         {
             super.onPostExecute(s);
 
-
             try
             {
                 JSONObject object = new JSONObject(s);
@@ -207,12 +232,14 @@ public class HelperActivity extends AppCompatActivity
                     String phone = jsonObject.getString("PHONE_NUMBER");
                     String home = jsonObject.getString("HOME_ADDRESS");
                     String description = jsonObject.getString("DESCRIPTION");
+                    String date = jsonObject.getString("CREATED_AT");
 
-                    WhiteFlags whiteFlags = new WhiteFlags();
+                    WhiteFlagsGet whiteFlags = new WhiteFlagsGet();
                     whiteFlags.setUserName(name);
                     whiteFlags.setPhoneNumber(phone);
                     whiteFlags.setHomeAddress(home);
                     whiteFlags.setDescription(description);
+                    whiteFlags.setCreatedAt(date);
 
                     whiteFlagList.add(whiteFlags);
                 }
@@ -222,7 +249,7 @@ public class HelperActivity extends AppCompatActivity
                 e.printStackTrace();
             }
 
-            FlagsAdapter adapter = new FlagsAdapter(HelperActivity.this, whiteFlagList);
+            adapter = new FlagsAdapter(HelperActivity.this, whiteFlagList);
             listView.setAdapter(adapter);
             dialog.dismiss();
         }

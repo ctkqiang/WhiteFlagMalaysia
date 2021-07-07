@@ -5,24 +5,34 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.johnmelodyme.whiteflag.R;
+import com.johnmelodyme.whiteflag.constants.LogLevel;
+import com.johnmelodyme.whiteflag.functions.FlagFunctions;
 import com.johnmelodyme.whiteflag.model.WhiteFlags;
+import com.johnmelodyme.whiteflag.model.WhiteFlagsGet;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlagsAdapter extends BaseAdapter
+public class FlagsAdapter extends BaseAdapter implements Filterable
 {
     public Context context;
-    public ArrayList<WhiteFlags> whiteFlagsList;
+    public ArrayList<WhiteFlagsGet> whiteFlagsList;
+    public ArrayList<WhiteFlagsGet> wflist;
+    public FilterHelper filterHelper;
 
-    public FlagsAdapter(Context context, ArrayList<WhiteFlags> whiteFlagsList)
+    public FlagsAdapter(Context context, ArrayList<WhiteFlagsGet> whiteFlagsList)
     {
         this.whiteFlagsList = whiteFlagsList;
         this.context = context;
+        this.wflist = whiteFlagsList;
     }
 
     /**
@@ -86,23 +96,72 @@ public class FlagsAdapter extends BaseAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
+        WhiteFlagsGet whiteFlags = whiteFlagsList.get(position);
 
         if (convertView == null)
         {
-            convertView = LayoutInflater.from(context).inflate(R.layout.helper_item, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.helper_item, parent, false);
         }
 
         TextView name = (TextView) convertView.findViewById(R.id.insert_name);
         TextView phone = (TextView) convertView.findViewById(R.id.insert_phone);
         TextView address = (TextView) convertView.findViewById(R.id.insert_address);
         TextView description = (TextView) convertView.findViewById(R.id.insert_description);
+        TextView date = (TextView) convertView.findViewById(R.id.insert_date);
+        Button send_help = (Button) convertView.findViewById(R.id.help_user);
 
-        name.setText(context.getResources().getString(R.string.name) + ": " + whiteFlagsList.get(position).getUserName());
-        phone.setText(context.getResources().getString(R.string.phone) + ": " + whiteFlagsList.get(position).getPhoneNumber());
-        address.setText(context.getResources().getString(R.string.home) + ": " + whiteFlagsList.get(position).getHomeAddress());
+        name.setText(context.getResources().getString(R.string.name) + ":\n" + whiteFlagsList.get(position).getUserName());
+        phone.setText(context.getResources().getString(R.string.phone) + ":\n" + whiteFlagsList.get(position).getPhoneNumber());
+        address.setText(context.getResources().getString(R.string.home) + ":\n" + whiteFlagsList.get(position).getHomeAddress());
         description.setText("\"" + whiteFlagsList.get(position).getDescription() + "\"");
+        date.setText(context.getResources().getString(R.string.request_on) + "\t" + whiteFlagsList.get(position).getCreatedAt());
+
+        send_help.setOnClickListener(v ->
+        {
+            FlagFunctions.log_output(
+                    "send_help/n, return ~> " + whiteFlags.getUserName() + " | " + whiteFlags.getPhoneNumber(),
+                    0,
+                    LogLevel.DEBUG
+            );
+            FlagFunctions.log_output(
+                    "send_help/n <<CallBack>> ~>  Initiate Call",
+                    0,
+                    LogLevel.DEBUG
+            );
+
+            FlagFunctions.call_user(whiteFlags.getPhoneNumber(), context);
+        });
 
         return convertView;
     }
 
+    public void setWhiteFlags(ArrayList<WhiteFlagsGet> filteredWhiteFlagsList)
+    {
+        this.wflist = filteredWhiteFlagsList;
+    }
+
+    public void refresh()
+    {
+        notifyDataSetChanged();
+    }
+
+    /**
+     * <p>Returns a filter that can be used to constrain data with a filtering
+     * pattern.</p>
+     *
+     * <p>This method is usually implemented by {@link Adapter}
+     * classes.</p>
+     *
+     * @return a filter used to constrain data
+     */
+    @Override
+    public Filter getFilter()
+    {
+        if (filterHelper == null)
+        {
+            filterHelper = new FilterHelper(whiteFlagsList, this, context);
+        }
+
+        return filterHelper;
+    }
 }

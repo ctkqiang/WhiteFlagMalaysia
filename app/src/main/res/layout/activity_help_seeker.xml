@@ -67,7 +67,7 @@
                 tools:ignore="RtlSymmetry" />
 
             <EditText
-                android:id="@+id/editTextTextMultiLine"
+                android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginStart="13dp"
@@ -85,7 +85,7 @@
                 tools:ignore="RtlSymmetry" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/post_request"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:layout_marginStart="13dp"

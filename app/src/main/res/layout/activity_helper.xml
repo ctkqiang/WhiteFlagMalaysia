@@ -6,17 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".activities.HelperActivity">
 
+    <LinearLayout
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/edit_text_border"
+            android:divider="@android:color/transparent"
+            android:hapticFeedbackEnabled="true"
+            android:hint="@string/search"
+            android:textCursorDrawable="@drawable/cursor"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:paddingStart="23dp"
+            android:paddingEnd="23dp"
+            app:queryBackground="@android:color/transparent"
+            tools:ignore="RtlSymmetry" />
+
+    </LinearLayout>
+
     <ListView
         android:id="@+id/recycler_view"
-        android:layout_marginStart="13dp"
-        android:layout_marginBottom="13dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="13dp"
-        android:scrollbars="vertical"
+        android:layout_width="408dp"
+        android:layout_height="580dp"
+        android:layout_below="@+id/search_layout"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
         android:clickable="true"
         android:divider="@color/black"
         android:dividerHeight="1sp"
         android:focusable="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:scrollbars="vertical" />
 </RelativeLayout>

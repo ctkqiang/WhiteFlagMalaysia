@@ -3,7 +3,7 @@ package com.johnmelodyme.whiteflag.model;
 
 import java.time.OffsetDateTime;
 
-public class WhiteFlags
+public class WhiteFlagsGet
 {
     private String id;
     private String userName;
@@ -14,15 +14,6 @@ public class WhiteFlags
     private String currentLocation;
     private String networkCarrier;
     private String createdAt;
-
-    public WhiteFlags(String userName, String phoneNumber, String homeAddress,
-                      String description)
-    {
-        this.userName = userName;
-        this.phoneNumber = phoneNumber;
-        this.homeAddress = homeAddress;
-        this.description = description;
-    }
 
     public String getID()
     {

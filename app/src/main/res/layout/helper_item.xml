@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="13dp"
     android:layout_marginStart="13dp"
+    android:layout_marginTop="13dp"
     android:layout_marginEnd="13dp"
-    android:layout_marginBottom="13dp"
-   >
+    android:layout_marginBottom="13dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,46 +22,60 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
             android:textColor="@color/black"
-            android:textSize="23sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/insert_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="13dp"
             android:textColor="@color/black"
-            android:textSize="23sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
 
         <TextView
             android:id="@+id/insert_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="13dp"
             android:textColor="@color/black"
-            android:textSize="23sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/insert_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="13dp"
             android:textColor="@color/black"
-
-            android:layout_marginBottom="23dp"
-            android:textSize="23sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/insert_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
-            android:layout_marginBottom="23dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="13dp"
             android:gravity="end"
             android:textColor="@android:color/darker_gray"
-            android:textSize="23sp"
-            android:visibility="gone" />
+            android:textSize="10sp"
+            android:textStyle="bold"
+            tools:ignore="SmallSp" />
+
+        <Button
+            android:id="@+id/help_user"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="3dp"
+            android:backgroundTint="@color/black"
+            android:text="@string/button_title"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</RelativeLayout>

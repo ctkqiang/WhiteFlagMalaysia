@@ -1,13 +1,16 @@
 package com.johnmelodyme.whiteflag.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.johnmelodyme.whiteflag.R;
+import com.johnmelodyme.whiteflag.constants.Constants;
 import com.johnmelodyme.whiteflag.constants.LogLevel;
 import com.johnmelodyme.whiteflag.functions.FlagFunctions;
 
@@ -73,5 +76,51 @@ public class DecisionActivity extends AppCompatActivity
                 break;
             }
         }
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.about:
+            {
+                FlagFunctions.alert_prompt(
+                        getString(R.string.copyright),
+                        getString(R.string.disclaimer),
+                        this
+                );
+
+                break;
+            }
+
+            case R.id.support:
+            {
+                FlagFunctions.open_url(Constants.dev_profile_url, this);
+                break;
+            }
+
+            case R.id.report:
+            {
+                FlagFunctions.email_to_dev(this);
+                break;
+            }
+
+            default:
+            {
+                break;
+            }
+        }
+        return (super.onOptionsItemSelected(item));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        return true;
     }
 }

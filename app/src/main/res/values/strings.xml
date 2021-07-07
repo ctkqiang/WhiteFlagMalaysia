@@ -2,7 +2,7 @@
     <string name="app_name">White Flag</string>
     <string name="give">I Am Here To Help</string>
     <string name="get">I Am Here To Seek Help</string>
-    <string name="footnote">\"For The Citizens By The Citizens\"</string>
+    <string name="footnote">\"For the citizens by the citizens\"</string>
     <string name="name">Name</string>
     <string name="hp">Phone Number</string>
     <string name="home">Address</string>
@@ -10,5 +10,20 @@
     <string name="post">Post</string>
     <string name="phone">Phone</string>
     <string name="loading">Loading Citizens Data</string>
+    <string name="button_title">Help This Citizen</string>
+    <string name="search">Search</string>
+    <string name="request_on">Requested on</string>
+    <string name="on_gps_request">This application required GPS</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="about">About This App</string>
+    <string name="report">Report Issue</string>
+    <string name="copyright" translatable="false">Developed by John Melody Me</string>
+    <string name="disclaimer">DISCLAIMER: This Application is Developed to Help The Citizens, Not a propaganda. But Citizens to feel free to donate to me just in case I got escourt to the detention.</string>
+    <string name="support">Support My Other App?</string>
+    <string name="warning">This is for Malaysian only!</string>
+    <string name="return200">You successfully posted request 😇</string>
+    <string name="return400">Your Request Post Not Successful 😟</string>
+    <string name="success_message">No Worries… Help is on its way 😇</string>
 
 </resources>
