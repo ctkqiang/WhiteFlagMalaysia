@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
-            android:textColor="@color/black"
+
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
-            android:textColor="@color/black"
+
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
-            android:textColor="@color/black"
+
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
             android:layout_marginBottom="13dp"
-            android:textColor="@color/black"
+
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -60,7 +60,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layoutDirection="rtl"
-            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             tools:ignore="ObsoleteLayoutParam" />

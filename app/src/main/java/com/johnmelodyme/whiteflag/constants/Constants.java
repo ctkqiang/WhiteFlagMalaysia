@@ -24,8 +24,8 @@ public class Constants
     public static String white_flag_movement = "https://bit.ly/36dRPsv";
 
     /* REST API */
-    public static String url = "http://192.168.156.83/";
-//    public static String url = "http://benderaputih.000webhostapp.com/";
+//    public static String url = "http://192.168.156.83/";
+    public static String url = "http://benderaputih.000webhostapp.com/";
     public static String get_data = url + "flag/api/view/";
     public static String insert_data = url + "flag/api/data/";
 
