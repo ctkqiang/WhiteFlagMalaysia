@@ -2,18 +2,13 @@ package com.johnmelodyme.whiteflag.activities;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,7 +17,6 @@ import com.johnmelodyme.whiteflag.components.FlagsAdapter;
 import com.johnmelodyme.whiteflag.constants.Constants;
 import com.johnmelodyme.whiteflag.constants.LogLevel;
 import com.johnmelodyme.whiteflag.functions.FlagFunctions;
-import com.johnmelodyme.whiteflag.model.WhiteFlags;
 import com.johnmelodyme.whiteflag.model.WhiteFlagsGet;
 
 import org.json.JSONArray;

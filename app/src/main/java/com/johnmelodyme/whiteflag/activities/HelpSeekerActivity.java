@@ -93,6 +93,7 @@ public class HelpSeekerActivity extends AppCompatActivity
             restAdapter = new Builder().setEndpoint(Constants.url).build();
 
             PostService postService = restAdapter.create(PostService.class);
+            finish();
 
             postService.insertUser(
                     user_name, user_phone, user_home, user_posts, new Callback<Response>()
@@ -107,6 +108,7 @@ public class HelpSeekerActivity extends AppCompatActivity
                         @Override
                         public void success(Response response, Response response2)
                         {
+
                             //On success we will read the server's output using
                             // bufferedreader
                             //Creating a bufferedreader object
@@ -134,6 +136,7 @@ public class HelpSeekerActivity extends AppCompatActivity
 
                             if (response.getStatus() == 200)
                             {
+
                                 FlagFunctions.log_output(
                                         "post_service/1 return -> " + String.valueOf(response.getStatus()),
                                         0,
@@ -142,12 +145,13 @@ public class HelpSeekerActivity extends AppCompatActivity
 
                                 FlagFunctions.show_toast(getString(R.string.return200), HelpSeekerActivity.this);
 
-                                finish();
+
 
                                 FlagFunctions.show_toast(getString(R.string.success_message), HelpSeekerActivity.this);
                             }
                             else
                             {
+
                                 FlagFunctions.log_output(
                                         "post_service/1 return -> " + String.valueOf(response.getStatus()),
                                         1,
@@ -156,7 +160,7 @@ public class HelpSeekerActivity extends AppCompatActivity
 
                                 FlagFunctions.show_toast(getString(R.string.return400), HelpSeekerActivity.this);
 
-                                finish();
+
                             }
                         }
 
@@ -170,6 +174,8 @@ public class HelpSeekerActivity extends AppCompatActivity
                         @Override
                         public void failure(RetrofitError error)
                         {
+                            finish();
+
                             FlagFunctions.show_toast(
                                     error.toString(),
                                     HelpSeekerActivity.this
