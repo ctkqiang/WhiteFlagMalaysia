@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -29,6 +30,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HelperActivity extends AppCompatActivity
 {
@@ -39,6 +41,7 @@ public class HelperActivity extends AppCompatActivity
     public ProgressDialog dialog;
     public ListView listView;
     public EditText searchText;
+    public String search_char;
 
     /* Render User Interface */
     public void render_user_interface(Bundle bundle)
@@ -71,6 +74,11 @@ public class HelperActivity extends AppCompatActivity
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
+                System.out.println(s);
+
+                search_char = String.valueOf(s);
+
+                whiteFlagList.clear();
 
             }
 
@@ -112,6 +120,8 @@ public class HelperActivity extends AppCompatActivity
         /* Get Data*/
         new GetData().execute();
     }
+
+
 
     /* Async task class to get JSON by making HTTP call */
     @SuppressLint("StaticFieldLeak")
@@ -249,5 +259,149 @@ public class HelperActivity extends AppCompatActivity
             listView.setAdapter(adapter);
             dialog.dismiss();
         }
+    }
+
+    /* Async task class to get JSON by making HTTP call */
+    @SuppressLint("StaticFieldLeak")
+    public class SearchData extends AsyncTask<String, String, String>
+    {
+        /**
+         * Runs on the UI thread before {@link #doInBackground}.
+         * Invoked directly by {@link #execute} or {@link #executeOnExecutor}.
+         * The default version does nothing.
+         *
+         * @see #onPostExecute
+         * @see #doInBackground
+         */
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+
+        }
+
+        /**
+         * Override this method to perform a computation on a background thread. The
+         * specified parameters are the parameters passed to {@link #execute}
+         * by the caller of this task.
+         * <p>
+         * This will normally run on a background thread. But to better
+         * support testing frameworks, it is recommended that this also tolerates
+         * direct execution on the foreground thread, as part of the {@link #execute} call.
+         * <p>
+         * This method can call {@link #publishProgress} to publish updates
+         * on the UI thread.
+         *
+         * @param params The parameters of the task.
+         * @return A result, defined by the subclass of this task.
+         * @see #onPreExecute()
+         * @see #onPostExecute
+         * @see #publishProgress
+         */
+        @Override
+        protected String doInBackground(String... params)
+        {
+            String result = null;
+
+            try
+            {
+                URL url = new URL(Constants.url + Constants.get_search_data + "?keyword=" + search_char);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.connect();
+
+                if (conn.getResponseCode() == HttpURLConnection.HTTP_OK)
+                {
+                    InputStreamReader inputStreamReader =
+                            new InputStreamReader(conn.getInputStream());
+                    BufferedReader reader = new BufferedReader(inputStreamReader);
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String temp;
+
+                    while ((temp = reader.readLine()) != null)
+                    {
+                        stringBuilder.append(temp);
+                    }
+
+                    result = stringBuilder.toString();
+                }
+                else
+                {
+                    result = "Error";
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+
+        /**
+         * <p>Runs on the UI thread after {@link #doInBackground}. The
+         * specified result is the value returned by {@link #doInBackground}.
+         * To better support testing frameworks, it is recommended that this be
+         * written to tolerate direct execution as part of the execute() call.
+         * The default version does nothing.</p>
+         *
+         * <p>This method won't be invoked if the task was cancelled.</p>
+         *
+         * @param s The result of the operation computed by {@link #doInBackground}.
+         * @see #onPreExecute
+         * @see #doInBackground
+         */
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+            whiteFlagList.clear();
+            try
+            {
+                JSONObject object = new JSONObject(s);
+                JSONArray array = object.getJSONArray("WHITE_FLAG");
+
+                for (int i = 0; i < array.length(); i++)
+                {
+                    JSONObject jsonObject = array.getJSONObject(i);
+
+                    String name = jsonObject.getString("USER_NAME");
+                    String phone = jsonObject.getString("PHONE_NUMBER");
+                    String home = jsonObject.getString("HOME_ADDRESS");
+                    String description = jsonObject.getString("DESCRIPTION");
+                    int status = jsonObject.getInt("STATUS");
+                    String date = jsonObject.getString("CREATED_AT");
+
+                    WhiteFlagsGet whiteFlags = new WhiteFlagsGet();
+                    whiteFlags.setUserName(name);
+                    whiteFlags.setPhoneNumber(phone);
+                    whiteFlags.setHomeAddress(home);
+                    whiteFlags.setDescription(description);
+                    whiteFlags.setStatus(status);
+                    whiteFlags.setCreatedAt(date);
+
+                    whiteFlagList.add(whiteFlags);
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+
+            adapter = new FlagsAdapter(HelperActivity.this, whiteFlagList);
+            listView.setAdapter(adapter);
+            dialog.dismiss();
+        }
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event)
+    {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
+        {
+            whiteFlagList.clear();
+            new SearchData().execute();
+        }
+
+        return super.dispatchKeyEvent(event);
     }
 }

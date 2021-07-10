@@ -124,7 +124,7 @@ public class FlagsAdapter extends BaseAdapter implements Filterable
 
         name.setText(context.getResources().getString(R.string.name) + ":\n" + whiteFlagsList.get(position).getUserName());
         phone.setText(context.getResources().getString(R.string.phone) + ":\n" + whiteFlagsList.get(position).getPhoneNumber());
-        address.setText(context.getResources().getString(R.string.home) + ":\n" + whiteFlagsList.get(position).getHomeAddress());
+        address.setText(context.getResources().getString(R.string.home_u) + ":\n" + whiteFlagsList.get(position).getHomeAddress());
         description.setText("\"" + whiteFlagsList.get(position).getDescription() + "\"");
         date.setText(context.getResources().getString(R.string.request_on) + "\t" + whiteFlagsList.get(position).getCreatedAt());
         status.setText(context.getResources().getString(R.string.helped) + "\t " + whiteFlagsList.get(position).getStatus());

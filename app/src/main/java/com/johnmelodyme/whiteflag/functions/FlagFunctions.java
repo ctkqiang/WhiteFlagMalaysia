@@ -248,7 +248,7 @@ public class FlagFunctions extends Constants
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(context);
         builder.setMessage(message).setCancelable(true).setNegativeButton(
-                context.getResources().getString(R.string.yes),
+                context.getResources().getString(R.string.ok),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -257,9 +257,7 @@ public class FlagFunctions extends Constants
                         dialog.cancel();
                     }
                 }
-        ).setTitle(title).setIcon(
-                context.getResources().getDrawable(android.R.drawable.ic_dialog_info)
-        ).show();
+        ).setTitle(title).show();
     }
 
     /**

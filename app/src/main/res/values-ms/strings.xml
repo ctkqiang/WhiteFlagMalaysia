@@ -6,7 +6,7 @@
     <string name="footnote">\"Dari rakyat untuk rakyat\"</string>
     <string name="name">Nama</string>
     <string name="hp">Nombor Telefon</string>
-    <string name="home">Alamat</string>
+    <string name="home">Alamat (Negeri poskod diperlukan)</string>
     <string name="desp">Apa Bantuan yang Anda Perlu?</string>
     <string name="post">Hantar</string>
     <string name="phone">Telefon</string>
@@ -27,4 +27,6 @@
     <string name="success_message">Jangan risau ... Bantuan Akan Datang  😟</string>
     <string name="helped">Bantuan Diterima</string>
     <string name="call_msg">Adakah anda mahu memanggilnya?</string>
+    <string name="ok" translatable="false">Saya tahu</string>
+    <string name="home_u">Alamat</string>
 </resources>

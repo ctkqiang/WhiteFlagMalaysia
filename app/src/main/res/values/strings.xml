@@ -5,7 +5,8 @@
     <string name="footnote">\"For the citizens by the citizens\"</string>
     <string name="name">Name</string>
     <string name="hp">Phone Number</string>
-    <string name="home">Address</string>
+    <string name="home">Address (State, postcode are required)</string>
+    <string name="home_u">Address</string>
     <string name="desp">What Help Do You Need?</string>
     <string name="post">Post</string>
     <string name="phone">Phone</string>
@@ -27,5 +28,6 @@
     <string name="success_message">No Worries… Help is on its way 😇</string>
     <string name="helped">Help Received</string>
     <string name="call_msg">Would you like to call him/her?</string>
+    <string name="ok">I know</string>
 
 </resources>

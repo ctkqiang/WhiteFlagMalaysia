@@ -6,7 +6,7 @@
     <string name="footnote">\"人民照顾人民\"</string>
     <string name="name">名字</string>
     <string name="hp">电话号码</string>
-    <string name="home">地址</string>
+    <string name="home">地址 （州、邮政编码为必填项）</string>
     <string name="desp">您需要什么帮助？</string>
     <string name="post">发布</string>
     <string name="phone">电话</string>
@@ -27,4 +27,6 @@
     <string name="success_message">别担心......帮助即将到来  😟</string>
     <string name="helped">收到的帮助</string>
     <string name="call_msg">你想给他/她打电话吗？</string>
+    <string name="ok" translatable="false">我知道</string>
+    <string name="home_u">"地址 "</string>
 </resources>
