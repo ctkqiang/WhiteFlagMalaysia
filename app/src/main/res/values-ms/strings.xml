@@ -29,5 +29,4 @@
     <string name="call_msg">Adakah anda mahu memanggilnya?</string>
     <string name="ok" translatable="false">Saya tahu</string>
     <string name="home_u">Alamat</string>
-    <string name="search_msg">Mencari di dalam database...</string>
 </resources>

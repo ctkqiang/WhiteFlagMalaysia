@@ -29,5 +29,4 @@
     <string name="call_msg">你想给他/她打电话吗？</string>
     <string name="ok" translatable="false">我知道</string>
     <string name="home_u">"地址 "</string>
-    <string name="search_msg">搜索数据库...</string>
 </resources>

@@ -49,7 +49,7 @@ public class WhiteFlagsGet
 
     public String getHomeAddress()
     {
-        return homeAddress.toUpperCase();
+        return homeAddress;
     }
 
     public void setHomeAddress(String value)
