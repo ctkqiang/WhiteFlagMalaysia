@@ -29,4 +29,5 @@
     <string name="call_msg">நீங்கள் அவரை / அவளை அழைக்க விரும்புகிறீர்களா?</string>
     <string name="ok">எனக்கு தெரியும்</string>
     <string name="home_u">"முகவரி "</string>
+    <string name="search_msg">எங்கள் தரவுத்தளத்திலிருந்து தேடுகிறது...</string>
 </resources>

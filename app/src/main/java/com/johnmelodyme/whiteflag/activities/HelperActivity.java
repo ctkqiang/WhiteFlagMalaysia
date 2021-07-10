@@ -1,6 +1,7 @@
 package com.johnmelodyme.whiteflag.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class HelperActivity extends AppCompatActivity
     public ArrayList<WhiteFlagsGet> whiteFlagList;
     public FlagsAdapter adapter;
     public ProgressDialog dialog;
+    public ProgressDialog d;
     public ListView listView;
     public EditText searchText;
     public String search_char;
@@ -85,7 +87,6 @@ public class HelperActivity extends AppCompatActivity
             @Override
             public void afterTextChanged(Editable arg0)
             {
-
             }
         });
 
@@ -120,7 +121,6 @@ public class HelperActivity extends AppCompatActivity
         /* Get Data*/
         new GetData().execute();
     }
-
 
 
     /* Async task class to get JSON by making HTTP call */
@@ -278,6 +278,9 @@ public class HelperActivity extends AppCompatActivity
         {
             super.onPreExecute();
 
+            d = new ProgressDialog(HelperActivity.this, R.style.AppCompatAlertDialogStyle);
+            d.setMessage(getResources().getString(R.string.search_msg));
+            d.show();
         }
 
         /**
@@ -302,10 +305,12 @@ public class HelperActivity extends AppCompatActivity
         protected String doInBackground(String... params)
         {
             String result = null;
+            d.dismiss();
 
             try
             {
-                URL url = new URL(Constants.url + Constants.get_search_data + "?keyword=" + search_char);
+                URL url =
+                        new URL(Constants.url + Constants.get_search_data + "?keyword=" + search_char);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.connect();
 
@@ -355,6 +360,8 @@ public class HelperActivity extends AppCompatActivity
         {
             super.onPostExecute(s);
             whiteFlagList.clear();
+            d.dismiss();
+
             try
             {
                 JSONObject object = new JSONObject(s);
@@ -389,7 +396,7 @@ public class HelperActivity extends AppCompatActivity
 
             adapter = new FlagsAdapter(HelperActivity.this, whiteFlagList);
             listView.setAdapter(adapter);
-            dialog.dismiss();
+            d.dismiss();
         }
     }
 
@@ -403,5 +410,20 @@ public class HelperActivity extends AppCompatActivity
         }
 
         return super.dispatchKeyEvent(event);
+    }
+
+    /**
+     * Called when the activity has detected the user's press of the back
+     * key. The {@link #getOnBackPressedDispatcher() OnBackPressedDispatcher} will be given a
+     * chance to handle the back button before the default behavior of
+     * {@link Activity#onBackPressed()} is invoked.
+     *
+     * @see #getOnBackPressedDispatcher()
+     */
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        searchText.getText().clear();
     }
 }
