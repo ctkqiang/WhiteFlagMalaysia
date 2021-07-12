@@ -25,7 +25,7 @@ public class Constants
 
     /* REST API */
 //    public static String url = "http://192.168.156.83/";
-    public static String url = "http://benderaputih.000webhostapp.com/";
+    public static String url = "https://benderaputihmalaysia.000webhostapp.com/";
     public static String get_data = url + "flag/api/view/";
     public static String insert_data = url + "flag/api/data/";
     public static String get_search_data = "flag/api/search/";
