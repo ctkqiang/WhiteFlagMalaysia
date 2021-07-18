@@ -1,5 +1,7 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
+    id 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 }
 
 android {
@@ -10,8 +12,8 @@ android {
         applicationId "com.johnmelodyme.whiteflag"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 5
-        versionName "2.2"
+        versionCode 7
+        versionName "2.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -25,11 +27,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
+
+println project.name
 
 final DEXTER_VERSION = '6.2.2'
 final VOLLEY_VERSION = '1.2.0'
@@ -40,6 +45,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -49,5 +55,11 @@ dependencies {
 
     // Retrofit
     implementation 'com.squareup.retrofit:retrofit:1.9.0'
+
+    implementation platform('com.google.firebase:firebase-bom:28.2.1')
+    implementation 'com.google.firebase:firebase-analytics'
+//    implementation 'com.google.firebase:firebase-messaging:20.1.3'
+    implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
+
 
 }

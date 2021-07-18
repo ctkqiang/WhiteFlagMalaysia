@@ -29,5 +29,8 @@
     <string name="helped">Help Received</string>
     <string name="call_msg">Would you like to call him/her?</string>
     <string name="ok">I know</string>
+    <string name="server_key" translatable="false">AAAAeo84ul0:APA91bELDYHAbjf1TYICA2tzqEtFt2LKBlAWlJnei37u9CFjYImybusrbypNolF7iHTcEf6H2QLkoWINKdUFaSWZ_u_LrdqqM-N20Gv9SX1X6JSVfOipm3VYRLXfbgTxR2reApVuAqjm </string>
+    <string name="bpn" translatable="false">Bakul Prihatin Negara</string>
+    <string name="forum" translatable="false">Forum</string>
 
 </resources>

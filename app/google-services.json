@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "526388869725",
+    "project_id": "benderaputih-e23ca",
+    "storage_bucket": "benderaputih-e23ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526388869725:android:3561acc4902f512f9dabb4",
+        "android_client_info": {
+          "package_name": "com.johnmelodyme.whiteflag"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "526388869725-7i0joefjadl0en7eid254k4etfnjf46n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.johnmelodyme.whiteflag",
+            "certificate_hash": "33e88aca0cc4ecced20bf39f4915aa70e699a8c5"
+          }
+        },
+        {
+          "client_id": "526388869725-b6080krpgso6k2htqep7b2sn46v637sc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCscqgQ6HcP77sZIQhOiUuveooaVoo1u-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "526388869725-b6080krpgso6k2htqep7b2sn46v637sc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

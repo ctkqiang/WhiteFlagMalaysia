@@ -13,6 +13,7 @@ import com.johnmelodyme.whiteflag.R;
 import com.johnmelodyme.whiteflag.constants.Constants;
 import com.johnmelodyme.whiteflag.constants.LogLevel;
 import com.johnmelodyme.whiteflag.functions.FlagFunctions;
+import com.johnmelodyme.whiteflag.services.PushNotificationService;
 
 
 public class DecisionActivity extends AppCompatActivity
@@ -50,6 +51,12 @@ public class DecisionActivity extends AppCompatActivity
 
         /* Render User Interface */
         render_user_interface(savedInstanceState);
+
+        /* Initiate Push Notification Service */
+        PushNotificationService.get_service(this);
+
+        /* Set Floating Notification */
+        //FlagFunctions.set_floating_notification(this);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -95,9 +102,27 @@ public class DecisionActivity extends AppCompatActivity
                 break;
             }
 
+            case R.id.forum:
+            {
+                FlagFunctions.log_output("forum/0", 0, LogLevel.DEBUG);
+
+                FlagFunctions.parse_url(Constants.forum, this, WebViewActivity.class);
+
+                break;
+            }
+
+            case R.id.bpn:
+            {
+                FlagFunctions.log_output("bpn/0", 0, LogLevel.DEBUG);
+
+                FlagFunctions.open_url(Constants.bpn_url, this);
+
+                break;
+            }
+
             case R.id.support:
             {
-                FlagFunctions.open_url(Constants.dev_profile_url, this);
+                FlagFunctions.parse_url(Constants.dev_profile_url, this, WebViewActivity.class);
                 break;
             }
 

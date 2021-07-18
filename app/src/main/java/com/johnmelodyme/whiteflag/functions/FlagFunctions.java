@@ -8,18 +8,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-
 import android.net.Uri;
 import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.format.Formatter;
 import android.util.Log;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -34,12 +33,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Method;
-import java.math.BigInteger;
 import java.net.URLDecoder;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.List;
 
 public class FlagFunctions extends Constants
@@ -101,6 +95,21 @@ public class FlagFunctions extends Constants
         log_output("render_bottom_navigation/1", 0, LogLevel.DEBUG);
 
         activity.getWindow().setNavigationBarColor(ContextCompat.getColor(activity.getApplicationContext(), R.color.black));
+    }
+
+    public static void set_floating_notification(Context context)
+    {
+        Intent intent = new Intent();
+        intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+
+        //for Android 5-7
+        intent.putExtra("app_package", context.getPackageName());
+        intent.putExtra("app_uid", context.getApplicationInfo().uid);
+
+        // for Android 8 and above
+        intent.putExtra("android.provider.extra.APP_PACKAGE", context.getPackageName());
+
+        context.startActivity(intent);
     }
 
     /**
@@ -286,5 +295,36 @@ public class FlagFunctions extends Constants
             e.printStackTrace();
         }
         return "";
+    }
+
+    /**
+     * @param activity The Current instance of the activity for opening url in app.
+     * @param webView  Link to the webview activity, required for resource
+     */
+    @SuppressLint("SetJavaScriptEnabled")
+    public static void open_url_in_app(@NonNull AppCompatActivity activity, Bundle bundle,
+                                       WebView webView)
+    {
+        String url;
+
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+        bundle = activity.getIntent().getExtras();
+        url = bundle.getString("url");
+
+        log_output("open_url_in_app/3", 0, LogLevel.DEBUG);
+
+        webView.animate();
+        webView.loadUrl(url);
+    }
+
+    public static void parse_url(@NonNull String url, Context context, @NonNull Class<?> classname)
+    {
+        Intent intent = new Intent(context, classname);
+        intent.putExtra("url", url);
+        context.startActivity(intent);
+
+        log_output("parse_url/3", 0, LogLevel.DEBUG);
     }
 }

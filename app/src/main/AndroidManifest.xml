@@ -2,26 +2,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.johnmelodyme.whiteflag"
-    android:installLocation="preferExternal">
+    android:isFeatureSplit="true"
+    android:installLocation="preferExternal"
+    tools:targetApi="o">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
-    <uses-feature android:name="android.hardware.location.gps" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/app"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/app_round"
-        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.WhiteFlag"
+        android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup"
         tools:targetApi="m">
+        <activity android:name=".activities.WebViewActivity" />
         <activity android:name=".activities.HelpSeekerActivity" />
         <activity android:name=".activities.HelperActivity" />
         <activity android:name=".activities.DecisionActivity">
@@ -35,6 +36,22 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <service
+            android:name=".services.WhiteFlagsPushNotification"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/app" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/white" />
     </application>
 
 </manifest>

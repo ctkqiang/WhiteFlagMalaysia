@@ -8,51 +8,55 @@
     android:background="@color/black"
     tools:context=".activities.DecisionActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="130dp"
-        android:layout_marginEnd="23dp"
-        android:orientation="vertical"
-        tools:ignore="UselessParent">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            app:srcCompat="@mipmap/logo"
-            tools:ignore="ContentDescription" />
 
-        <Button
-            android:id="@+id/helper"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="23dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="130dp"
             android:layout_marginEnd="23dp"
-            android:layout_marginBottom="13dp"
-            android:onClick="onClicked"
-            android:backgroundTint="@color/white"
-            android:text="@string/give"
-            android:textColor="@color/black"
-            tools:ignore="UsingOnClickInXml" />
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
 
-        <Button
-            android:id="@+id/help_seek"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginStart="23dp"
-            android:layout_marginTop="23dp"
-            android:layout_marginEnd="23dp"
-            android:layout_marginBottom="33dp"
-            android:backgroundTint="@color/white"
-            android:backgroundTintMode="add"
-            android:onClick="onClicked"
-            android:text="@string/get"
-            android:textColor="@color/black"
-            tools:ignore="UsingOnClickInXml" />
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:srcCompat="@mipmap/logo"
+                tools:ignore="ContentDescription" />
+
+            <Button
+                android:id="@+id/helper"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="23dp"
+                android:layout_marginBottom="13dp"
+                android:onClick="onClicked"
+                android:backgroundTint="@color/white"
+                android:text="@string/give"
+                android:textColor="@color/black"
+                tools:ignore="UsingOnClickInXml" />
+
+            <Button
+                android:id="@+id/help_seek"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="23dp"
+                android:layout_marginEnd="23dp"
+                android:layout_marginBottom="33dp"
+                android:backgroundTint="@color/white"
+                android:backgroundTintMode="add"
+                android:onClick="onClicked"
+                android:text="@string/get"
+                android:textColor="@color/black"
+                tools:ignore="UsingOnClickInXml" />
+        </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/footNote1"

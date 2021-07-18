@@ -1,23 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.DecisionActivity">
 
 
     <item
+        android:id="@+id/forum"
+        android:title="@string/forum"
+        app:showAsAction="collapseActionView" />
+
+    <item
         android:id="@+id/report"
-        app:showAsAction="collapseActionView"
-        android:title="@string/report" />
+        android:title="@string/report"
+        app:showAsAction="collapseActionView" />
+
+
+    <item
+        android:id="@+id/bpn"
+        android:title="@string/bpn"
+        app:showAsAction="collapseActionView" />
 
     <item
         android:id="@+id/support"
-        app:showAsAction="collapseActionView"
-        android:title="@string/support" />
+        android:title="@string/support"
+        app:showAsAction="collapseActionView" />
 
     <item
         android:id="@+id/about"
-        app:showAsAction="collapseActionView"
-        android:title="@string/about" />
+        android:title="@string/about"
+        app:showAsAction="collapseActionView" />
 
 </menu>
